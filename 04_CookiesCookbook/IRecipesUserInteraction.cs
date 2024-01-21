@@ -1,3 +1,6 @@
-﻿internal interface IRecipesUserInteraction
+﻿public interface IRecipesUserInteraction
 {
+    public void ShowMessage(string message);
+    public void Exit();
+    void PrintExistingRecipes(IEnumerable<Recipe> allRecipes);
 }
