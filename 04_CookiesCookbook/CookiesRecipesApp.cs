@@ -12,7 +12,7 @@
     {
         var allRecipes = _recipesRepositroy.Read(filePath);
         _recipesUserInteraction.PrintExistingRecipes(allRecipes);
-        //_recipesUserInteraction.PrompotToCreateRecipe();
+        _recipesUserInteraction.PrompotToCreateRecipe();
 
         //var ingredients = _recipesUserInteraction.ReadIngredientsFromUser();
 

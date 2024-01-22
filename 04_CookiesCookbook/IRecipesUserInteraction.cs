@@ -3,4 +3,5 @@
     public void ShowMessage(string message);
     public void Exit();
     void PrintExistingRecipes(IEnumerable<Recipe> allRecipes);
+    void PrompotToCreateRecipe();
 }

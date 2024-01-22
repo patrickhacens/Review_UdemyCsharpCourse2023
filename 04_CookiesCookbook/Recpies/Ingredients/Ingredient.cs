@@ -4,5 +4,8 @@
     public abstract string Name { get; }
     public virtual string PreperationInstructions =>
         "Add to other ingredients";
+
+    public override string ToString() =>
+        $"{ID}. {Name}";
 }
 

@@ -14,7 +14,7 @@
             new Recipe(new List<Ingredient>
             {
                 new CocoaPowder(),
-                new SpeltFlour(),
+                new CoconutFlour(),
                 new Cinnamon()
             })
         };
