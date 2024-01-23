@@ -4,4 +4,5 @@
     public void Exit();
     void PrintExistingRecipes(IEnumerable<Recipe> allRecipes);
     void PrompotToCreateRecipe();
+    IEnumerable<Ingredient> ReadIngredientsFromUser();
 }

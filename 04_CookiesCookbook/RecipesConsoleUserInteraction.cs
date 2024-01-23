@@ -44,6 +44,33 @@
         }
 
     }
+
+    public IEnumerable<Ingredient> ReadIngredientsFromUser()
+    {
+        bool shallStop = false;
+        string input;
+        List<Ingredient> ingredients = new List<Ingredient>();
+        do
+        {
+            Console.WriteLine("Add an ingredient by its ID or type anything else if finished.");
+            input = Console.ReadLine();
+            if (int.TryParse(input, out int id))
+            {
+                Ingredient selectedIngredient = _ingredientRegistery.GetByID(id);
+                if (selectedIngredient is not null)
+                {
+                    ingredients.Add(selectedIngredient);
+                }
+            }
+            else
+            {
+                shallStop = true;
+            }
+
+        } while (!shallStop);
+
+        return ingredients;
+    }
 }
 
 public class IngredientRegistery
@@ -60,4 +87,9 @@ public class IngredientRegistery
         new Cinnamon(),
         new CocoaPowder()
     };
+
+    public Ingredient GetByID(int id)
+    {
+        return All.Where((i) => i.ID == id).First();
+    }
 }

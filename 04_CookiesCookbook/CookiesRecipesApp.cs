@@ -14,23 +14,23 @@
         _recipesUserInteraction.PrintExistingRecipes(allRecipes);
         _recipesUserInteraction.PrompotToCreateRecipe();
 
-        //var ingredients = _recipesUserInteraction.ReadIngredientsFromUser();
+        var ingredients = _recipesUserInteraction.ReadIngredientsFromUser();
 
-        //if (ingredients.Count > 0)
-        //{
-        //    var recpie = new Recipe(ingredients);
-        //    allRecipes.Add(recpie);
-        //    _recipesRepositroy.Write(filePath, allRecipes);
+        if (ingredients.Count() > 0)
+        {
+            var recpie = new Recipe(ingredients);
+            allRecipes.Add(recpie);
+            _recipesRepositroy.Write(filePath, allRecipes);
 
-        //    _recipesUserInteraction.ShowMessage("Recpie added");
-        //    _recipesUserInteraction.ShowMessage(recpie.ToString());
+            _recipesUserInteraction.ShowMessage("Recpie added");
+            _recipesUserInteraction.ShowMessage(recpie.ToString());
 
-        //}
-        //else
-        //{
-        //    _recipesUserInteraction.ShowMessage("No Ingredients have been selected." +
-        //        "Recpie will not be saved");
-        //}
+        }
+        else
+        {
+            _recipesUserInteraction.ShowMessage("No Ingredients have been selected." +
+                "Recpie will not be saved");
+        }
         _recipesUserInteraction.Exit();
     }
 }

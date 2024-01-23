@@ -19,4 +19,9 @@
             })
         };
     }
+
+    public void Write(string filePath, List<Recipe> allRecipes)
+    {
+        
+    }
 }
