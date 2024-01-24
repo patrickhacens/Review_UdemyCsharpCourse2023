@@ -1,8 +1,8 @@
 ﻿public class RecipesConsoleUserInteraction : IRecipesUserInteraction
 {
-    private readonly IngredientRegistery _ingredientRegistery;
+    private readonly IIngredientRegistery _ingredientRegistery;
 
-    public RecipesConsoleUserInteraction(IngredientRegistery ingredientRegistery)
+    public RecipesConsoleUserInteraction(IIngredientRegistery ingredientRegistery)
     {
         _ingredientRegistery = ingredientRegistery;
     }
@@ -70,26 +70,5 @@
         } while (!shallStop);
 
         return ingredients;
-    }
-}
-
-public class IngredientRegistery
-{
-    public IEnumerable<Ingredient> All { get; }
-    = new List<Ingredient>()
-    {
-        new WheatFlour(),
-        new CoconutFlour(),
-        new Butter(),
-        new Chocolate(),
-        new Sugar(),
-        new Cardmom(),
-        new Cinnamon(),
-        new CocoaPowder()
-    };
-
-    public Ingredient GetByID(int id)
-    {
-        return All.Where((i) => i.ID == id).First();
     }
 }
