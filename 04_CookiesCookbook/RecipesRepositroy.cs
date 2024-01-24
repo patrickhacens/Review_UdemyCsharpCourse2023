@@ -1,10 +1,10 @@
 ﻿public class RecipesRepositroy : IRecipesRepositroy
 {
     private const string Separator = ",";
-    private readonly IStringTextualRepository _stringRepository;
+    private readonly IStringRepository _stringRepository;
     private readonly IIngredientRegistery _ingredientRegistery;
 
-    public RecipesRepositroy(IStringTextualRepository stringRepository,
+    public RecipesRepositroy(IStringRepository stringRepository,
         IIngredientRegistery ingredientRegistery)
     {
         _stringRepository = stringRepository;
