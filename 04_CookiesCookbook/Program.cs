@@ -1,5 +1,5 @@
 ﻿
-FileFormat fileFormat = FileFormat.Json;
+FileFormat fileFormat = FileFormat.Txt;
 
 
 IStringRepository stringRepository = fileFormat == FileFormat.Txt ?

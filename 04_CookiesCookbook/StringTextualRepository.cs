@@ -1,20 +1,12 @@
-﻿public class StringTextualRepository : IStringRepository
+﻿public class StringTextualRepository : StringRepository
 {
     private static readonly string Seperator = Environment.NewLine;
-    public List<string> Read(string filePath)
-    {
-        if (File.Exists(filePath))
-        {
 
-            var fileContent = File.ReadAllText(filePath);
-            return fileContent.Split(Seperator).ToList();
-        }
-        return new List<string>();
-    }
+    protected override string StringsToText(List<string> content) =>
 
-    public void Write(string filePath, List<string> content)
-    {
-        File.WriteAllText(filePath, string.Join(Seperator, content));
-    }
+        string.Join(Seperator, content);
 
+
+    protected override List<string> TextToStrings(string fileContent) =>
+        fileContent.Split(Seperator).ToList();
 }
