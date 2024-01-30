@@ -1,10 +1,40 @@
 ﻿using System.Text.Json;
 
-Console.WriteLine("Enter the name of the file you want to read:");
-string fileName = Console.ReadLine();
+bool isFileRead = false;
+string fileContent = "";
 
-string fileContent = File.ReadAllText(Path.Combine("Resources", fileName));
+do
+{
+    try
+    {
+        Console.WriteLine("Enter the name of the file you want to read:");
+        string fileName = Console.ReadLine();
+        fileContent = File.ReadAllText(Path.Combine("Resources", fileName));
+        isFileRead = true;
+    }
 
+    catch (FileNotFoundException ex)
+    {
+        Console.WriteLine("The file does not exist.");
+    }
+    catch (UnauthorizedAccessException ex)
+    {
+        Console.WriteLine("The file does not exist.");
+    }
+
+    catch (ArgumentNullException ex)
+    {
+        Console.WriteLine("The file name cannot be null.");
+    }
+    catch (ArgumentException ex)
+    {
+        Console.WriteLine("The file name cannot be empty.");
+    }
+
+
+
+
+} while (!isFileRead);
 List<VideoGame> games = JsonSerializer.Deserialize<List<VideoGame>>(fileContent);
 
 if (games.Count > 0)
