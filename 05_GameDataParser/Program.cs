@@ -35,13 +35,21 @@ do
 
 
 } while (!isFileRead);
-List<VideoGame> games = JsonSerializer.Deserialize<List<VideoGame>>(fileContent);
+List<VideoGame> videoGames = new();
+try
+{
+    videoGames = JsonSerializer.Deserialize<List<VideoGame>>(fileContent);
+}
+catch (JsonException ex)
+{
+    throw new JsonException($"{ex.Message} the file is :{fileName}")
+}
 
-if (games.Count > 0)
+if (videoGames.Count > 0)
 {
     Console.WriteLine();
     Console.WriteLine("Loaded games are:");
-    foreach (VideoGame game in games)
+    foreach (VideoGame game in videoGames)
     {
         Console.WriteLine(game);
     }
