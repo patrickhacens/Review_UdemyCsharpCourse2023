@@ -21,35 +21,36 @@ public class GameDataParserApp
 {
     public void Run()
     {
-        bool isFileRead = false;
-        string fileContent = "";
-        string fileName = "";
 
-        do
+        string fileName = ReadValidFileName();
+
+        string fileContent = File.ReadAllText(Path.Combine("Resources", fileName));
+
+        List<VideoGame> videoGames = DeserializeVideoGames(fileName, fileContent);
+
+        PrintVideoGames(videoGames);
+    }
+
+    private static void PrintVideoGames(List<VideoGame> videoGames)
+    {
+        if (videoGames.Count > 0)
         {
-            Console.WriteLine("Enter the name of the file you want to read:");
-            fileName = Console.ReadLine();
+            Console.WriteLine();
+            Console.WriteLine("Loaded games are:");
+            foreach (VideoGame game in videoGames)
+            {
+                Console.WriteLine(game);
+            }
+        }
+        else
+        {
+            Console.WriteLine("No games are present in the input file.");
+        }
+    }
 
-            if (fileContent is null)
-            {
-                Console.WriteLine("The file name cannot be null.");
-            }
-            else if (fileContent == string.Empty)
-            {
-                Console.WriteLine("The file name cannot be empty.");
-            }
-            else if (!File.Exists(fileName))
-            {
-                Console.WriteLine("The file does not exist.");
-            }
-            else
-            {
-                fileContent = File.ReadAllText(Path.Combine("Resources", fileName));
-                isFileRead = true;
-            }
-
-        } while (!isFileRead);
-        List<VideoGame> videoGames = new();
+    private static List<VideoGame> DeserializeVideoGames(string fileName, string fileContent)
+    {
+        List<VideoGame> videoGames;
         try
         {
             videoGames = JsonSerializer.Deserialize<List<VideoGame>>(fileContent);
@@ -66,19 +67,37 @@ public class GameDataParserApp
             throw new JsonException($"{ex.Message} the file is :{fileName}", ex);
         }
 
-        if (videoGames.Count > 0)
+        return videoGames;
+    }
+
+    private string ReadValidFileName()
+    {
+        bool isFileNameValid = false;
+        string fileName;
+        do
         {
-            Console.WriteLine();
-            Console.WriteLine("Loaded games are:");
-            foreach (VideoGame game in videoGames)
+            Console.WriteLine("Enter the name of the file you want to read:");
+            fileName = Console.ReadLine();
+
+            if (fileName is null)
             {
-                Console.WriteLine(game);
+                Console.WriteLine("The file name cannot be null.");
             }
-        }
-        else
-        {
-            Console.WriteLine("No games are present in the input file.");
-        }
+            else if (fileName == string.Empty)
+            {
+                Console.WriteLine("The file name cannot be empty.");
+            }
+            else if (!File.Exists(fileName))
+            {
+                Console.WriteLine("The file does not exist.");
+            }
+            else
+            {
+                isFileNameValid = true;
+            }
+
+        } while (!isFileNameValid);
+        return fileName;
     }
 }
 
