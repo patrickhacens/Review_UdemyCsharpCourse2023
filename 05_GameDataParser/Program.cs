@@ -1,62 +1,93 @@
 ﻿using System.Text.Json;
 
-bool isFileRead = false;
-string fileContent = "";
 
-do
-{
-    try
-    {
-        Console.WriteLine("Enter the name of the file you want to read:");
-        string fileName = Console.ReadLine();
-        fileContent = File.ReadAllText(Path.Combine("Resources", fileName));
-        isFileRead = true;
-    }
+var app = new GameDataParserApp();
+var logger = new Logger("log.txt");
 
-    catch (FileNotFoundException ex)
-    {
-        Console.WriteLine("The file does not exist.");
-    }
-    catch (UnauthorizedAccessException ex)
-    {
-        Console.WriteLine("The file does not exist.");
-    }
-
-    catch (ArgumentNullException ex)
-    {
-        Console.WriteLine("The file name cannot be null.");
-    }
-    catch (ArgumentException ex)
-    {
-        Console.WriteLine("The file name cannot be empty.");
-    }
-
-
-
-
-} while (!isFileRead);
-List<VideoGame> videoGames = new();
 try
 {
-    videoGames = JsonSerializer.Deserialize<List<VideoGame>>(fileContent);
+    app.Run();
 }
-catch (JsonException ex)
+catch (Exception ex)
 {
-    throw new JsonException($"{ex.Message} the file is :{fileName}")
+    Console.WriteLine("Sorry! the application has experienced an unexpected error" +
+        "and will have to be closed.");
+    logger.Log(ex);
 }
+Console.WriteLine("press any key to close.");
+Console.ReadKey();
 
-if (videoGames.Count > 0)
+public class GameDataParserApp
 {
-    Console.WriteLine();
-    Console.WriteLine("Loaded games are:");
-    foreach (VideoGame game in videoGames)
+    public void Run()
     {
-        Console.WriteLine(game);
+        bool isFileRead = false;
+        string fileContent = "";
+        string fileName = "";
+
+        do
+        {
+            try
+            {
+                Console.WriteLine("Enter the name of the file you want to read:");
+                fileName = Console.ReadLine();
+                fileContent = File.ReadAllText(Path.Combine("Resources", fileName));
+                isFileRead = true;
+            }
+
+            catch (FileNotFoundException ex)
+            {
+                Console.WriteLine("The file does not exist.");
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                Console.WriteLine("The file does not exist.");
+            }
+
+            catch (ArgumentNullException ex)
+            {
+                Console.WriteLine("The file name cannot be null.");
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine("The file name cannot be empty.");
+            }
+
+
+
+
+        } while (!isFileRead);
+        List<VideoGame> videoGames = new();
+        try
+        {
+            videoGames = JsonSerializer.Deserialize<List<VideoGame>>(fileContent);
+        }
+        catch (JsonException ex)
+        {
+            var orginalColor = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"JSON in {fileName} file was not" +
+                $"in a valid format. JSON body:");
+            Console.WriteLine(fileContent);
+            Console.ForegroundColor = orginalColor;
+
+            throw new JsonException($"{ex.Message} the file is :{fileName}", ex);
+        }
+
+        if (videoGames.Count > 0)
+        {
+            Console.WriteLine();
+            Console.WriteLine("Loaded games are:");
+            foreach (VideoGame game in videoGames)
+            {
+                Console.WriteLine(game);
+            }
+        }
+        else
+        {
+            Console.WriteLine("No games are present in the input file.");
+        }
     }
-}
-else
-{
-    Console.WriteLine("No games are present in the input file.");
 }
 
 public class VideoGame
