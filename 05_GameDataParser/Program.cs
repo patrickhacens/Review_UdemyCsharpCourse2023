@@ -27,34 +27,26 @@ public class GameDataParserApp
 
         do
         {
-            try
-            {
-                Console.WriteLine("Enter the name of the file you want to read:");
-                fileName = Console.ReadLine();
-                fileContent = File.ReadAllText(Path.Combine("Resources", fileName));
-                isFileRead = true;
-            }
+            Console.WriteLine("Enter the name of the file you want to read:");
+            fileName = Console.ReadLine();
 
-            catch (FileNotFoundException ex)
-            {
-                Console.WriteLine("The file does not exist.");
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                Console.WriteLine("The file does not exist.");
-            }
-
-            catch (ArgumentNullException ex)
+            if (fileContent is null)
             {
                 Console.WriteLine("The file name cannot be null.");
             }
-            catch (ArgumentException ex)
+            else if (fileContent == string.Empty)
             {
                 Console.WriteLine("The file name cannot be empty.");
             }
-
-
-
+            else if (!File.Exists(fileName))
+            {
+                Console.WriteLine("The file does not exist.");
+            }
+            else
+            {
+                fileContent = File.ReadAllText(Path.Combine("Resources", fileName));
+                isFileRead = true;
+            }
 
         } while (!isFileRead);
         List<VideoGame> videoGames = new();
