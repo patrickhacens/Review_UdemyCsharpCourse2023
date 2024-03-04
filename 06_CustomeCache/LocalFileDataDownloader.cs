@@ -1,4 +1,4 @@
-﻿public class LocalFileDataDownloader : IDataDownloader<string, string>
+﻿public class LocalFileDataDownloader : IDataDownloader
 {
 
     public LocalFileDataDownloader()

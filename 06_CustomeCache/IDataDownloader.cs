@@ -1,4 +1,4 @@
-﻿public interface IDataDownloader<Tkey, TData>
+﻿public interface IDataDownloader
 {
-    TData Download(Tkey key);
+    string Download(string key);
 }

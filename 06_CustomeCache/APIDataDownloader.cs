@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-public class APIDataDownloader : IDataDownloader<string, string>
+public class APIDataDownloader : IDataDownloader
 {
 
     public APIDataDownloader()
