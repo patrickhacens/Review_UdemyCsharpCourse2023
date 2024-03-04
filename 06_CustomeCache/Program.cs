@@ -17,9 +17,9 @@ Console.WriteLine(cachingDataDownloader.Download("b.txt"));
 
 ICache<string, string> apisRequestsCache = new Cache<string, string>();
 
-IDataDownloader<string, string> apiDownloader = new APIDataDownloader();
+IDataDownloader apiDownloader = new APIDataDownloader();
 
-IDataDownloader<string, string> cachingApiDataDownloader = new CachingApiDataDownloader(apiDownloader, apisRequestsCache);
+IDataDownloader cachingApiDataDownloader = new CachingDataDownloader(apiDownloader, apisRequestsCache);
 Console.WriteLine(
     apiDownloader.Download("https://en.wikipedia.org/wiki/Unified_Modeling_Language"));
 
