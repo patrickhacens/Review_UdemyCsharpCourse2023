@@ -3,10 +3,10 @@
 ICache<string, string> filesCache = new Cache<string, string>();
 
 
-IDataDownloader dataDownloader = new LocalFileDataDownloader();
 
 IDataDownloader cachingDataDownloader =
-    new CachingDataDownloader(dataDownloader, filesCache);
+    new PrintingDataDownloader(
+        new CachingDataDownloader(new LocalFileDataDownloader(), filesCache));
 
 
 Console.WriteLine(cachingDataDownloader.Download("a.txt"));
@@ -17,14 +17,16 @@ Console.WriteLine(cachingDataDownloader.Download("b.txt"));
 
 ICache<string, string> apisRequestsCache = new Cache<string, string>();
 
-IDataDownloader apiDownloader = new APIDataDownloader();
 
-IDataDownloader cachingApiDataDownloader = new CachingDataDownloader(apiDownloader, apisRequestsCache);
-Console.WriteLine(
-    apiDownloader.Download("https://en.wikipedia.org/wiki/Unified_Modeling_Language"));
+IDataDownloader cachingApiDataDownloader =
+    new PrintingDataDownloader(
+        new CachingDataDownloader(new APIDataDownloader(), apisRequestsCache));
 
 Console.WriteLine(
-    apiDownloader.Download("https://en.wikipedia.org/wiki/Unified_Modeling_Language"));
+    cachingApiDataDownloader.Download("https://en.wikipedia.org/wiki/Unified_Modeling_Language"));
+
+Console.WriteLine(
+    cachingApiDataDownloader.Download("https://en.wikipedia.org/wiki/Unified_Modeling_Language"));
 
 
 
