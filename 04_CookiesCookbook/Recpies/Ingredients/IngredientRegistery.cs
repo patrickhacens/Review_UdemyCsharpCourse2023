@@ -13,13 +13,7 @@
         new CocoaPowder()
     };
 
-    public Ingredient GetByID(int id)
-    {
-        foreach (var item in All)
-        {
-            if (item.ID == id)
-                return item;
-        }
-        return null;
-    }
+    public Ingredient GetByID(int id) =>
+       All.FirstOrDefault(x => x.ID == id, null);
+
 }

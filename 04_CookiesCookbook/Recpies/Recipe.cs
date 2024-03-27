@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-public class Recipe
+﻿public class Recipe
 {
     public IEnumerable<Ingredient> Ingredients { get; }
 
@@ -11,13 +9,9 @@ public class Recipe
 
     public override string ToString()
     {
-        List<string> steps = new List<string>();
+        IEnumerable<string> steps =
+        Ingredients.Select(ingredient => $"{ingredient.Name}. {ingredient.PreperationInstructions}");
 
-        foreach (var ingredient in Ingredients)
-        {
-            steps.Add($"{ingredient.Name}. {ingredient.PreperationInstructions}");
-
-        }
         return string.Join(Environment.NewLine, steps);
 
     }
