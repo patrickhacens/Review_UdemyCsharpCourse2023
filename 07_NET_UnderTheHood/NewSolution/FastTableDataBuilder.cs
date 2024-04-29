@@ -12,47 +12,37 @@ public class FastTableDataBuilder : ITableDataBuilder
 
         foreach (var row in csvData.Rows)
         {
-            var newRowData = new Dictionary<string, object>();
-
+            var newRow = new FastRow();
             for (int columnIndex = 0; columnIndex < csvData.Columns.Length; ++columnIndex)
             {
                 var column = csvData.Columns[columnIndex];
                 string valueAsString = row[columnIndex];
-                object convertedValue = ConvertValueToTargetType(valueAsString);
-                if (convertedValue != null)
+
+                if (string.IsNullOrEmpty(valueAsString))
                 {
-                    newRowData[column] = convertedValue;
+                    continue;
+                }
+                else if (valueAsString == "TRUE")
+                {
+                    newRow.AssingCell(column, true);
+                }
+                else if (valueAsString == "FALSE")
+                {
+                    newRow.AssingCell(column, false);
+                }
+                else if (valueAsString.Contains(".") && decimal.TryParse(valueAsString, out var valueAsDecimal))
+                {
+                    newRow.AssingCell(column, valueAsDecimal);
+                }
+                else if (int.TryParse(valueAsString, out var valueAsInt))
+                {
+                    newRow.AssingCell(column, valueAsInt);
                 }
             }
 
-            resultRows.Add(new FastRow(newRowData));
+            resultRows.Add(newRow);
         }
 
         return new FastTableData(csvData.Columns, resultRows);
-    }
-
-    private object ConvertValueToTargetType(string value)
-    {
-        if (string.IsNullOrEmpty(value))
-        {
-            return null;
-        }
-        if (value == "TRUE")
-        {
-            return true;
-        }
-        if (value == "FALSE")
-        {
-            return false;
-        }
-        if (value.Contains(".") && decimal.TryParse(value, out var valueAsDecimal))
-        {
-            return valueAsDecimal;
-        }
-        if (int.TryParse(value, out var valueAsInt))
-        {
-            return valueAsInt;
-        }
-        return value;
     }
 }
